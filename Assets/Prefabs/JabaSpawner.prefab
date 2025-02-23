@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2751228481639480880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4843420460099978049}
+  - component: {fileID: 7131860931697047722}
+  m_Layer: 0
+  m_Name: JabaSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4843420460099978049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751228481639480880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.9240824, y: 1.3296715, z: -0.0058942344}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7131860931697047722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751228481639480880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a01b895b48bf0a449b30cabf8cc0b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - game_object: {fileID: 9104824142497606040, guid: eb0d2b950f9083847a2e284a8e4ef737, type: 3}
+    weight: 0.25
+  - game_object: {fileID: 7930428657631564900, guid: 3f0be62a7a1c7c847816d7c2bec71a97, type: 3}
+    weight: 0.25
+  - game_object: {fileID: 3310601703615917438, guid: 938810de0584f154b960913cde95fd11, type: 3}
+    weight: 0.25
+  - game_object: {fileID: 5937375841603379520, guid: 2b055fd6d72a8ba409d818897564b1c1, type: 3}
+    weight: 0.25
