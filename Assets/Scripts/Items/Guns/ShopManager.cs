@@ -66,7 +66,7 @@ public class ShopManager : MonoBehaviour
             if (bulletSizeTexts[i] != null)
                 bulletSizeTexts[i].text = ((bullet_size_modifier[i] / def_bullet_size) * 100).ToString("F0") + "%";
 
-            if (coins.balance >= price[i] && !coins.purchasedBooks.Contains(bookPrefabs[i]))
+            if (GameController.Coin_balance >= price[i] && !coins.purchasedBooks.Contains(bookPrefabs[i]))
             {
                 buyButtons[i].interactable = true;
                 buyButtons[i].image.color = Color.white;

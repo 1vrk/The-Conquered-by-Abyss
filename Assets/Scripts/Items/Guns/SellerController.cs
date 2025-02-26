@@ -80,7 +80,7 @@ public class SellerController : MonoBehaviour
       
         if (coin_controller != null)
         {
-            return coin_controller.balance >= price;
+            return GameController.Coin_balance >= price;
         }
         return false;
     }

@@ -15,12 +15,16 @@ public class GameController : MonoBehaviour
     private static float move_speed = 3.3f;
     private static float fire_rate = 0.8f;
     private static float bullet_size = 0.3f;
+    private static float coin_balance = 0;
+    private static float point_balance = 0;
 
     public static float Health { get => health; set => health = value; }
     public static int Max_Health { get => max_health; set => max_health = value; }
     public static float Move_Speed { get => move_speed; set => move_speed = value; }
     public static float Fire_Rate { get => fire_rate; set => fire_rate = value; }
     public static float Bullet_Size { get => bullet_size; set => bullet_size = value; }
+    public static float Coin_balance { get => coin_balance; set => coin_balance = value; }
+    public static float Point_balance { get => point_balance; set => point_balance = value; }
 
     public TMP_Text health_text;
 
@@ -40,12 +44,8 @@ public class GameController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         SetOriginalPlayerColor();
+        LoadBalance();
     }
-
-    //private void Update()
-    //{
-    //    health_text.text = "Health: " + health;
-    //}
 
     public void SetOriginalPlayerColor()
     {
@@ -83,10 +83,8 @@ public class GameController : MonoBehaviour
         bullet_size += size;
     }
 
-    
     private IEnumerator KillPlayerWithDelay()
     {
-  
         if (bloodExplosionPrefab != null)
         {
             Instantiate(bloodExplosionPrefab, player.transform.position, Quaternion.identity);
@@ -96,17 +94,43 @@ public class GameController : MonoBehaviour
             Debug.LogError("Префаб частиц крови не назначен!");
         }
 
-       
         Destroy(player);
 
-        
         yield return new WaitForSeconds(1f);
 
        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
        
+        RoomController.instance.ClearLoadedRooms();
+   
+        DungeonCrawlerController.ClearVisitedPositions();
+
+        SceneManager.LoadScene(0);
+
+
+        ResetBalance();
         ResetCharacter();
+    }
+
+    public static void SaveBalance()
+    {
+        PlayerPrefs.SetFloat("CoinBalance", coin_balance);
+        PlayerPrefs.SetFloat("PointBalance", point_balance);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadBalance()
+    {
+        coin_balance = PlayerPrefs.GetFloat("CoinBalance", 0);
+        point_balance = PlayerPrefs.GetFloat("PointBalance", 0);
+    }
+
+    private static void ResetBalance()
+    {
+        PlayerPrefs.SetFloat("CoinBalance", 0);
+        PlayerPrefs.SetFloat("PointBalance", 0);
+
+        coin_balance = 0;
+        point_balance = 0;
     }
 
     private static void ResetCharacter()

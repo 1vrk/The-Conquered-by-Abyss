@@ -149,6 +149,8 @@ MonoBehaviour:
   coinPrefab: {fileID: 3895790594992336170, guid: fbfcf64eb8c955246b96bee1293fb4ab, type: 3}
   notInRoom: 1
   max_health: 3
+  initial_points: 2500
+  curr_points: 0
   bulletPrefab: {fileID: 5356169738115262139, guid: c62fc554c0357504d90f058e16b5c103, type: 3}
 --- !u!95 &7122533825377327580
 Animator:

@@ -49,6 +49,21 @@ public class RoomController : MonoBehaviour
         UpdateRoomQueue();
     }
 
+    public void ClearLoadedRooms()
+    {
+        
+        foreach (Room room in loadedRooms)
+        {
+            if (room != null && room.gameObject != null)
+            {
+                Destroy(room.gameObject);
+            }
+        }
+
+      
+        loadedRooms.Clear();
+    }
+
     void UpdateRoomQueue()
     {
         if (isLoadingRoom)

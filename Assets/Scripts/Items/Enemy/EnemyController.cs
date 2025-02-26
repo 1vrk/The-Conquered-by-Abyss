@@ -36,6 +36,9 @@ public class EnemyController : MonoBehaviour
     private bool coolDownAttack = false;
     public bool notInRoom = true;
     public int max_health = 3;
+
+    public float initial_points;
+    public float curr_points;
     private int current_health;
 
 
@@ -140,7 +143,17 @@ public class EnemyController : MonoBehaviour
     void Follow()
     {
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-     
+        StartCoroutine(ReducePointsOverTime());
+    }
+
+    private IEnumerator ReducePointsOverTime()
+    {
+        while (currState == EnemyState.Follow)
+        {
+            yield return new WaitForSeconds(1f);
+            curr_points -= initial_points * 0.1f;
+            curr_points = Mathf.Max(curr_points, 0);
+        }
     }
 
     void Attack()
@@ -199,10 +212,20 @@ public class EnemyController : MonoBehaviour
             Instantiate(bloodExplosionPrefab, transform.position, Quaternion.identity);
         }
         DropCoins();
+        GivePointsToPlayer();
         RoomController.instance.StartCoroutine(RoomController.instance.RoomCoroutine());
         Destroy(gameObject);
     }
 
+    private void GivePointsToPlayer()
+    {
+        PointsController points_controller = player.GetComponent<PointsController>();
+        curr_points = initial_points;
+        if (points_controller != null)
+        {
+            points_controller.AddPoints((int)curr_points);
+        }
+    }
     private void DropCoins()
     {
         int coinCount = Random.Range(minCoins, maxCoins + 1); 
