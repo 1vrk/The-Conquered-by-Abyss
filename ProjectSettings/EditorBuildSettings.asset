@@ -13,11 +13,23 @@ EditorBuildSettings:
     guid: ef97ad356d28af74ea183c1a12b3ef56
   - enabled: 1
     path: Assets/Scenes/Rooms/BasementEmpty.unity
-    guid: b908e4bdccc11da4c91d23168d533566
+    guid: 3b480254607373a40bd0046659e551e8
   - enabled: 1
     path: Assets/Scenes/Rooms/BasementEnd.unity
     guid: b6fd654f5aa38a74c9ee9ec5f7e0c1b5
   - enabled: 1
     path: Assets/Scenes/Rooms/BasementBasic.unity
     guid: 38b08448108242849bf53d548a8cb761
+  - enabled: 1
+    path: Assets/Scenes/MM.unity
+    guid: 1b09bd85ba4689f4db566b89052e2a71
+  - enabled: 1
+    path: Assets/Scenes/SettingsScene.unity
+    guid: 5172d39644e695e49b99b0db79c674e2
+  - enabled: 1
+    path: Assets/Scenes/AuthScene.unity
+    guid: 4ae59d01be198054ba952d1cb536906d
+  - enabled: 1
+    path: Assets/Scenes/Records.unity
+    guid: 6e1538f242ad20b4591cbd3044db981c
   m_configObjects: {}
