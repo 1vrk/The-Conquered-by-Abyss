@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
+    public AudioClip shoot;
+    public AudioSource audioSource;
+
     public float move_speed = 3.3f;
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -61,6 +63,7 @@ public class Player_Movement : MonoBehaviour
 
     void Shoot(float x, float y)
     {
+        PlayMusic(shoot);
         GameObject bullet = Instantiate (bullet_prefab, transform.position, transform.rotation) as GameObject;
         bullet.AddComponent<Rigidbody2D>().gravityScale = 0;
         bullet.GetComponent<Rigidbody2D>().velocity = new Vector3(
@@ -69,7 +72,13 @@ public class Player_Movement : MonoBehaviour
             0
             );
     }
-
+    private void PlayMusic(AudioClip clip)
+    {
+      
+            audioSource.clip = clip;
+            audioSource.Play();
+        
+    }
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * move_speed * Time.fixedDeltaTime);

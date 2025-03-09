@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChestController : MonoBehaviour
 {
+    private AudioSource hit_sound;
+
     public GameObject coinPrefab;
     private GameObject player;
     public Animator animator;
@@ -19,6 +21,9 @@ public class ChestController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         SetOriginalPlayerColor();
+
+        GameObject temp_sound = GameObject.Find("HitSound");
+        hit_sound = temp_sound.GetComponent<AudioSource>();
     }
     public void SetOriginalPlayerColor()
     {
@@ -40,6 +45,7 @@ public class ChestController : MonoBehaviour
             {
                 OpenChest();
             }
+            hit_sound.Play();
             Destroy(collision.gameObject);
         }
     }

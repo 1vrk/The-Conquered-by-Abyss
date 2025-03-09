@@ -19,6 +19,9 @@ public enum EnemyType
 
 public class EnemyController : MonoBehaviour
 {
+    private AudioSource death_sound;
+    private AudioSource hit_sound;
+
     public GameObject bloodExplosionPrefab; 
     GameObject player;
     public EnemyState currState = EnemyState.Idle;
@@ -49,13 +52,19 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        
         RoomController.instance.UpdateRooms();
         current_health = max_health;
+
+        GameObject potionSoundObject = GameObject.Find("EnemyDeathSound");
+        death_sound = potionSoundObject.GetComponent<AudioSource>();
+
+        GameObject temp_sound = GameObject.Find("HitSound");
+        hit_sound = temp_sound.GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        if(player == null) return;
 
         if (notInRoom)
         {
@@ -109,6 +118,10 @@ public class EnemyController : MonoBehaviour
 
     private bool IsPlayerInRange(float range)
     {
+        if (player == null)
+        {
+            return false;
+        }
         return Vector3.Distance(transform.position, player.transform.position) <= range;
     }
 
@@ -142,6 +155,11 @@ public class EnemyController : MonoBehaviour
 
     void Follow()
     {
+        if (player == null)
+        {
+            currState = EnemyState.Idle;
+            return;
+        }
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         StartCoroutine(ReducePointsOverTime());
     }
@@ -198,10 +216,15 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        current_health -= damage;
-        if (current_health <= 0)
+        
+        if (currState == EnemyState.Follow || currState == EnemyState.Attack)
         {
-            Death();
+            current_health -= damage;
+            hit_sound.Play();
+            if (current_health <= 0)
+            {
+                Death();
+            }
         }
     }
 
@@ -215,6 +238,7 @@ public class EnemyController : MonoBehaviour
         GivePointsToPlayer();
         RoomController.instance.StartCoroutine(RoomController.instance.RoomCoroutine());
         Destroy(gameObject);
+        death_sound.Play();
     }
 
     private void GivePointsToPlayer()

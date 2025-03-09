@@ -15,6 +15,9 @@ public class CollectionController : MonoBehaviour
 {
     public Item item;
 
+    public AudioClip potion;
+    private AudioSource audioSource;
+
     public float health_change;
     public float move_speed_change;
     public float attack_speed_change;
@@ -25,12 +28,21 @@ public class CollectionController : MonoBehaviour
         Destroy(GetComponent<PolygonCollider2D>());
         PolygonCollider2D collider = gameObject.AddComponent<PolygonCollider2D>();
         collider.isTrigger = true;
+        GameObject potionSoundObject = GameObject.Find("PotionSound");
+        audioSource = potionSoundObject.GetComponent<AudioSource>();
     }
 
-    void Update()
+    private void PlayMusic(AudioClip clip)
     {
-        
+        if(audioSource == null)
+        {
+            GameObject potionSoundObject = GameObject.Find("PotionSound");
+            audioSource = potionSoundObject.GetComponent<AudioSource>();
+        }
+        audioSource.clip = clip;
+        audioSource.Play();
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
    {
@@ -41,6 +53,7 @@ public class CollectionController : MonoBehaviour
             GameController.FireRateChange(attack_speed_change);
             GameController.BulletSizeChange(bullet_size_change);
             Destroy(gameObject);
+            PlayMusic(potion);
         }
     }
 }

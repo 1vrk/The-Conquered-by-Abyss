@@ -35,7 +35,7 @@ public class LadderControl : MonoBehaviour
                 GameController.SaveBalance();
                 RoomController.instance.ClearLoadedRooms();
                 DungeonCrawlerController.ClearVisitedPositions();
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(2);
                 
            
         }

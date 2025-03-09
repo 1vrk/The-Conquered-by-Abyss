@@ -5,6 +5,9 @@ using TMPro;
 
 public class CoinController : MonoBehaviour
 {
+    public AudioClip coin;
+    public AudioSource audioSource;
+
     public TMP_Text coin_balance;
     public List<GameObject> purchasedBooks = new List<GameObject>();
 
@@ -13,11 +16,18 @@ public class CoinController : MonoBehaviour
         if (collision.tag == "Coin")
         {
             Destroy(collision.gameObject);
+            PlayMusic(coin);
             GameController.Coin_balance++;
             UpdateUI();
         }
     }
-
+    private void PlayMusic(AudioClip clip)
+    {
+       
+            audioSource.clip = clip;
+            audioSource.Play();
+        
+    }
     public bool PurchaseBook(int cost, GameObject book)
     {
         if (GameController.Coin_balance >= cost)

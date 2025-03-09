@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
-
     public GameObject bloodExplosionPrefab;
+    private AudioSource death_sound;
+    private AudioSource destroy_sound;
 
     private static float health = 6;
     private static int max_health = 6;
@@ -37,6 +38,7 @@ public class GameController : MonoBehaviour
     public TMP_Text death;
     public Image image_death;
     public Animator deathAnimator;
+    public DatabaseRecordsManager record_manage;
 
     private Color originalPlayerColor;
     private SpriteRenderer spriteRenderer;
@@ -56,7 +58,14 @@ public class GameController : MonoBehaviour
         SetOriginalPlayerColor();
         LoadBalance();
         LoadMaxBalance();
-        
+        instance.StartCoroutine(FadeOutImage(image_death, 2));
+
+
+        GameObject potionSoundObject = GameObject.Find("DeathSound");
+        death_sound = potionSoundObject.GetComponent<AudioSource>();
+
+        GameObject sound = GameObject.Find("EnemyDeathSound");
+        destroy_sound = sound.GetComponent<AudioSource>();
     }
 
     public void SetOriginalPlayerColor()
@@ -102,6 +111,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator KillPlayerWithDelay()
     {
+        death_sound.Play();
+
         if (bloodExplosionPrefab != null)
         {
             Instantiate(bloodExplosionPrefab, player.transform.position, Quaternion.identity);
@@ -112,6 +123,8 @@ public class GameController : MonoBehaviour
         }
 
         Destroy(player);
+
+        destroy_sound.Play();
 
         yield return new WaitForSeconds(1f);
         SaveMaxBalance();
@@ -134,6 +147,8 @@ public class GameController : MonoBehaviour
         }
 
         text.color = new Color(text.color.r, text.color.g, text.color.b, 1f);
+       
+       
         instance.StartCoroutine(FadeOutText(text, 1));
     }
     public static IEnumerator FadeOutText(TMP_Text text, float duration)
@@ -216,7 +231,7 @@ public class GameController : MonoBehaviour
 
         DungeonCrawlerController.ClearVisitedPositions();
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
 
         ResetBalance();
         ResetCharacter();
@@ -232,7 +247,7 @@ public class GameController : MonoBehaviour
         ResetCharacter();
         instance.StartCoroutine(FadeOutImage(instance.image_death, 1));
 
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(1);
     }
     public static void SaveMaxBalance()
     {
@@ -246,6 +261,8 @@ public class GameController : MonoBehaviour
         if (max_point < point_balance)
         {
             PlayerPrefs.SetFloat("MaxPointBalance", point_balance);
+            instance.record_manage.UpdatePlayerRecords(UserManager.login, (int)point_balance);
+
         }
         PlayerPrefs.Save();
 
@@ -253,6 +270,7 @@ public class GameController : MonoBehaviour
 
     public static void LoadMaxBalance()
     {
+        PlayerPrefs.SetFloat("MaxPointBalance", instance.record_manage.LoadPlayerRecordsScore(UserManager.login));
         max_point = PlayerPrefs.GetFloat("MaxPointBalance", 0);
         Max_coin = PlayerPrefs.GetFloat("MaxCoinBalance", 0);
     }

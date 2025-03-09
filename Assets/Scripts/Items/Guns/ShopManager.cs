@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+    private AudioSource buy_sound;
+
     public Button[] buyButtons;
     public GameObject[] bookPrefabs;
     public int[] price;
@@ -21,11 +23,12 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        // Инициализация массивов
         price = new int[bookPrefabs.Length];
         fire_rate_modifier = new float[bookPrefabs.Length];
         move_speed_modifier = new float[bookPrefabs.Length];
         bullet_size_modifier = new float[bookPrefabs.Length];
+        GameObject temp_sound = GameObject.Find("BuySound");
+        buy_sound = temp_sound.GetComponent<AudioSource>();
 
         for (int i = 0; i < bookPrefabs.Length; i++)
         {
@@ -87,6 +90,7 @@ public class ShopManager : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             PlayerBookManager playerBookManager = player.GetComponent<PlayerBookManager>();
             playerBookManager.ReplaceBook(bookPrefabs[index]);
+            buy_sound.Play();
             UpdateShopUI();
         }
         else

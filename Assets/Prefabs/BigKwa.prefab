@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  potion: {fileID: 8300000, guid: db7809a1be1483a4b9bcc26078a1b736, type: 3}
   health_change: 0
   move_speed_change: -0.65
   attack_speed_change: 0

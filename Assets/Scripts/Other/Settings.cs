@@ -28,6 +28,7 @@ public class Settings : MonoBehaviour
 
     Resolution[] resolutions;
 
+
     public void Start()
     {
         resolution_dropdown.ClearOptions();
@@ -75,7 +76,7 @@ public class Settings : MonoBehaviour
 
     public void BackSetting()
     {
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(1);
     }
 
 
